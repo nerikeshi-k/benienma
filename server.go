@@ -54,9 +54,9 @@ func manager(c echo.Context) error {
 	atoi := func(s string) uint {
 		num, err := strconv.ParseUint(s, 10, 32)
 		if err != nil {
-			return uint(num)
+			return 0
 		}
-		return 0
+		return uint(num)
 	}
 	orderDetails := image.OrderDetails{
 		MaxWidth:  atoi(c.QueryParam("maxwidth")),
@@ -66,6 +66,8 @@ func manager(c echo.Context) error {
 	}
 
 	object, err := broker.Get(identity)
+
+	fmt.Printf("%v", orderDetails)
 
 	if err != nil {
 		switch err.(type) {
